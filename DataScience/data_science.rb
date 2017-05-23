@@ -69,11 +69,11 @@ default_lang_counts = train_classifier('train.csv')
 # => "en_20170505_1344.txt"
 # >> d = score_document(test1, default_lang_counts)
 # => {"Indonesian"=>7.095183638618205, "Icelandic"=>2.670804508254296, "English"=>17.17460224073087}
-def score_document(document, lang_counts = default_lang_counts)
+def score_document(file_path, lang_counts = default_lang_counts)
   results = {}
 
   # read document
-  File.open(document, "r:UTF-8") do |data|
+  File.open(file_path, "r:UTF-8") do |data|
 
     doc_counts = count_trigrams(data.read)
     #iterations = 0
@@ -98,7 +98,7 @@ end
 # => "en_20170505_1344.txt"
 # >> classify_doc(document, default_lang_counts)
 # => "English"
-def classify_doc(document, lang_counts=default_lang_counts)
-    d = score_document(document, lang_counts)
+def classify_doc(file_path, lang_counts=default_lang_counts)
+    d = score_document(file_path, lang_counts)
     return d.collect{|k,v| [k,v]}.sort_by{|x| x[1]}.reverse[0][0]
 end
